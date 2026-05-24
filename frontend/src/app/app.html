@@ -9,6 +9,9 @@
       <a routerLink="/categorias" routerLinkActive="active">Categorias</a>
       <a routerLink="/livros" routerLinkActive="active">Livros</a>
     </div>
+    <button class="btn-theme" (click)="toggleDark()" [title]="darkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'">
+      {{ darkMode ? '☀️' : '🌙' }}
+    </button>
   </div>
 </nav>
 <div class="page-container">
