@@ -22,11 +22,11 @@ export class CategoriaList implements OnInit {
   }
 
   carregar() {
-    this.service.listarCategorias().subscribe(data => {
-      this.categorias = data;
+    this.service.listarCategorias().subscribe({
+      next: (data) => this.categorias = data,
+      error: (err) => console.error('Erro ao carregar categorias:', err)
     });
   }
-
   deletar(id: number) {
     if (confirm('Deseja excluir esta categoria?')) {
       this.service.deletarCategoria(id).subscribe({

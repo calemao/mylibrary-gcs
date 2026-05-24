@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LibraryService } from '../../services/library.service';
@@ -19,7 +19,7 @@ export class Dashboard implements OnInit {
   emprestimosAtrasados: Emprestimo[] = [];
   erroConexao = '';
 
-  constructor(private service: LibraryService, private cdr: ChangeDetectorRef) { }
+  constructor(private service: LibraryService) { }
 
   ngOnInit() {
     this.carregarDados();
@@ -30,34 +30,22 @@ export class Dashboard implements OnInit {
 
     this.service.listarLivros().subscribe({
       next: (livros: Livro[]) => {
-        console.log('[Dashboard] listarLivros resposta:', livros);
         this.totalLivros = livros.length;
         this.livrosDisponiveis = livros.filter(l => l.status === 'DISPONIVEL').length;
         this.livrosEmprestados = livros.filter(l => l.status === 'EMPRESTADO').length;
-        this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('[Dashboard] listarLivros erro:', err);
+      error: () => {
         this.erroConexao = 'Não foi possível conectar ao servidor. Verifique se o backend está rodando na porta 8080.';
-        this.cdr.detectChanges();
       }
     });
 
     this.service.listarAtivos().subscribe({
-      next: (ativos: Emprestimo[]) => {
-        console.log('[Dashboard] listarAtivos resposta:', ativos);
-        this.emprestimosAtivos = ativos.length;
-        this.cdr.detectChanges();
-      },
+      next: (ativos: Emprestimo[]) => this.emprestimosAtivos = ativos.length,
       error: (err) => console.error('[Dashboard] listarAtivos erro:', err)
     });
 
     this.service.listarAtrasados().subscribe({
-      next: (atrasados: Emprestimo[]) => {
-        console.log('[Dashboard] listarAtrasados resposta:', atrasados);
-        this.emprestimosAtrasados = atrasados;
-        this.cdr.detectChanges();
-      },
+      next: (atrasados: Emprestimo[]) => this.emprestimosAtrasados = atrasados,
       error: (err) => console.error('[Dashboard] listarAtrasados erro:', err)
     });
   }
