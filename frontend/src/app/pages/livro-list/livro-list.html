@@ -50,7 +50,9 @@
                         </td>
                         <td class="cell-actions">
                             <a [routerLink]="['/livros', l.id]" class="btn btn-secondary btn-sm">Ver</a>
-                            <button class="btn btn-danger btn-sm" (click)="deletar(l.id!)">Excluir</button>
+                            @if (l.status === 'DISPONIVEL') {
+                                <button class="btn btn-danger btn-sm" (click)="deletar(l.id!)">Excluir</button>
+                            }
                         </td>
                     </tr>
                 }
