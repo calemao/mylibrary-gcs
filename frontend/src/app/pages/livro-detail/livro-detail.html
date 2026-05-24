@@ -1,0 +1,76 @@
+<div>
+    <h1 class="page-title">Detalhes do Livro</h1>
+
+    @if (carregando) {
+    <p class="empty-state">Carregando...</p>
+    }
+
+    @if (mensagem) {
+    <p class="message-success">{{ mensagem }}</p>
+    }
+
+    @if (erro) {
+    <div class="alert alert-error">{{ erro }}</div>
+    }
+
+    @if (livro) {
+    <div class="form-card">
+        <div class="form-group">
+            <label>Título</label>
+            <p class="form-control" style="background: var(--surface-2)">{{ livro.titulo }}</p>
+        </div>
+        <div class="form-group">
+            <label>Autor</label>
+            <p class="form-control" style="background: var(--surface-2)">{{ livro.autor }}</p>
+        </div>
+        @if (livro.isbn) {
+        <div class="form-group">
+            <label>ISBN</label>
+            <p class="form-control" style="background: var(--surface-2)">{{ livro.isbn }}</p>
+        </div>
+        }
+        @if (livro.ano) {
+        <div class="form-group">
+            <label>Ano</label>
+            <p class="form-control" style="background: var(--surface-2)">{{ livro.ano }}</p>
+        </div>
+        }
+        <div class="form-group">
+            <label>Status</label>
+            <p>
+                <span class="status-badge" [class.status-disponivel]="livro.status === 'DISPONIVEL'"
+                    [class.status-emprestado]="livro.status === 'EMPRESTADO'">
+                    {{ livro.status === 'DISPONIVEL' ? 'Disponível' : 'Emprestado' }}
+                </span>
+            </p>
+        </div>
+
+        <div class="form-actions">
+            @if (livro.status === 'DISPONIVEL') {
+            <a routerLink="/emprestimos/novo" class="btn btn-gold">📤 Emprestar</a>
+            }
+            @if (livro.status === 'EMPRESTADO' && emprestimoAtivo) {
+            <button class="btn btn-primary" (click)="devolver()">📥 Devolver</button>
+            }
+            <button class="btn btn-danger" (click)="deletar()">Excluir</button>
+            <a routerLink="/livros" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+
+    @if (emprestimoAtivo) {
+    <div class="form-card" style="margin-top: 1rem;">
+        <h2 class="section-title">Empréstimo Atual</h2>
+        <p><strong>Pessoa:</strong> {{ emprestimoAtivo.nomePessoa }}</p>
+        @if (emprestimoAtivo.telefone) {
+        <p><strong>Telefone:</strong> {{ emprestimoAtivo.telefone }}</p>
+        }
+        <p><strong>Emprestado em:</strong> {{ emprestimoAtivo.dataEmprestimo }}</p>
+        <p><strong>Devolução prevista:</strong>
+            <span class="text-danger">{{ emprestimoAtivo.dataDevolucaoPrevista }}</span>
+        </p>
+    </div>
+    }
+    }
+
+    <a routerLink="/livros" class="back-link">← Voltar para Livros</a>
+</div>

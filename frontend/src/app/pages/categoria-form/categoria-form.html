@@ -1,0 +1,24 @@
+<div>
+    <h1 class="page-title">Nova Categoria</h1>
+
+    @if (erro) {
+        <div class="alert alert-error">{{ erro }}</div>
+    }
+
+    <div class="form-card">
+        <div class="form-group">
+            <label>Nome *</label>
+            <input class="form-control" [(ngModel)]="nome" placeholder="Nome da categoria" />
+        </div>
+
+        <div class="form-group">
+            <label>Descrição</label>
+            <input class="form-control" [(ngModel)]="descricao" placeholder="Descrição (opcional)" />
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" (click)="salvar()" [disabled]="!nome.trim()">Salvar</button>
+            <a routerLink="/categorias" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</div>

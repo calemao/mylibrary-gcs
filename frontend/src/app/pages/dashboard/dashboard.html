@@ -1,0 +1,59 @@
+<div>
+    <h1 class="page-title">Dashboard</h1>
+
+    @if (erroConexao) {
+        <div class="alert alert-error">
+            <strong>Erro:</strong> {{ erroConexao }}
+            <button class="btn btn-sm btn-secondary" (click)="carregarDados()">Tentar novamente</button>
+        </div>
+    }
+
+    <div class="stats-grid">
+        <div class="stat-card stat-card--blue">
+            <h3 class="stat-title">Total de Livros</h3>
+            <p class="stat-value">{{ totalLivros }}</p>
+        </div>
+        <div class="stat-card stat-card--green">
+            <h3 class="stat-title">Disponíveis</h3>
+            <p class="stat-value">{{ livrosDisponiveis }}</p>
+        </div>
+        <div class="stat-card stat-card--orange">
+            <h3 class="stat-title">Emprestados</h3>
+            <p class="stat-value">{{ livrosEmprestados }}</p>
+        </div>
+        <div class="stat-card stat-card--gold">
+            <h3 class="stat-title">Empréstimos Ativos</h3>
+            <p class="stat-value">{{ emprestimosAtivos }}</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Empréstimos Atrasados</h2>
+    @if (emprestimosAtrasados.length === 0) {
+        <p class="empty-state">Nenhum empréstimo atrasado!</p>
+    } @else {
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Livro</th>
+                    <th>Pessoa</th>
+                    <th>Previsto para</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (e of emprestimosAtrasados; track e.id) {
+                    <tr>
+                        <td>{{ e.livro?.titulo }}</td>
+                        <td>{{ e.nomePessoa }}</td>
+                        <td class="text-danger">{{ e.dataDevolucaoPrevista }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="quick-actions">
+        <a routerLink="/livros/novo" class="btn btn-primary">+ Cadastrar Livro</a>
+        <a routerLink="/categorias/nova" class="btn btn-secondary">+ Nova Categoria</a>
+        <a routerLink="/emprestimos/novo" class="btn btn-gold">Emprestar Livro</a>
+    </div>
+</div>

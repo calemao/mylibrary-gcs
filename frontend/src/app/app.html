@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">
+      <span class="navbar-logo">📚</span>
+      My<strong>Library</strong>
+    </div>
+    <div class="navbar-links">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/categorias" routerLinkActive="active">Categorias</a>
+      <a routerLink="/livros" routerLinkActive="active">Livros</a>
+    </div>
+    <button class="btn-theme" (click)="toggleDark()" [title]="darkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'">
+      {{ darkMode ? '☀️' : '🌙' }}
+    </button>
+  </div>
+</nav>
+<div class="page-container">
+  <router-outlet />
+</div>

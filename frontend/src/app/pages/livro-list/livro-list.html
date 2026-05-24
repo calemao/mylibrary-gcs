@@ -1,0 +1,62 @@
+<div>
+    <div class="page-header">
+        <h1 class="page-title">Livros</h1>
+        <a routerLink="/livros/novo" class="btn btn-primary">+ Novo Livro</a>
+    </div>
+
+    @if (mensagem) {
+        <p class="message-success">{{ mensagem }}</p>
+    }
+
+    <div class="filter-bar">
+        <input class="form-control filter-search" [(ngModel)]="busca"
+            placeholder="Buscar por título ou autor..." (input)="carregar()" />
+        <select class="form-control" [(ngModel)]="categoriaId" (change)="carregar()">
+            <option [ngValue]="null">Todas as categorias</option>
+            @for (c of categorias; track c.id) {
+                <option [ngValue]="c.id">{{ c.nome }}</option>
+            }
+        </select>
+        <select class="form-control" [(ngModel)]="status" (change)="carregar()">
+            <option value="">Todos os status</option>
+            <option value="DISPONIVEL">Disponível</option>
+            <option value="EMPRESTADO">Emprestado</option>
+        </select>
+    </div>
+
+    @if (livros.length === 0) {
+        <p class="empty-state">Nenhum livro encontrado.</p>
+    } @else {
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (l of livros; track l.id) {
+                    <tr>
+                        <td>{{ l.titulo }}</td>
+                        <td>{{ l.autor }}</td>
+                        <td>
+                            <span class="status-badge"
+                                [class.status-disponivel]="l.status === 'DISPONIVEL'"
+                                [class.status-emprestado]="l.status === 'EMPRESTADO'">
+                                {{ l.status === 'DISPONIVEL' ? 'Disponível' : 'Emprestado' }}
+                            </span>
+                        </td>
+                        <td class="cell-actions">
+                            <a [routerLink]="['/livros', l.id]" class="btn btn-secondary btn-sm">Ver</a>
+                            <button class="btn btn-danger btn-sm" (click)="deletar(l.id!)">Excluir</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <a routerLink="/dashboard" class="back-link">Voltar ao Dashboard</a>
+</div>

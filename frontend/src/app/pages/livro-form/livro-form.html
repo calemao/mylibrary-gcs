@@ -1,0 +1,41 @@
+<div>
+    <h1 class="page-title">Novo Livro</h1>
+
+    @if (erro) {
+        <div class="alert alert-error">{{ erro }}</div>
+    }
+
+    <div class="form-card">
+        <div class="form-group">
+            <label>Título *</label>
+            <input class="form-control" [(ngModel)]="titulo" placeholder="Título do livro" />
+        </div>
+        <div class="form-group">
+            <label>Autor *</label>
+            <input class="form-control" [(ngModel)]="autor" placeholder="Nome do autor" />
+        </div>
+        <div class="form-group">
+            <label>ISBN</label>
+            <input class="form-control" [(ngModel)]="isbn" placeholder="Ex.: 978-3-16-148410-0" />
+        </div>
+        <div class="form-group">
+            <label>Ano de Publicação</label>
+            <input class="form-control" [(ngModel)]="ano" type="number" placeholder="Ex.: 2023" />
+        </div>
+        <div class="form-group">
+            <label>Categoria *</label>
+            <select class="form-control" [(ngModel)]="categoriaId">
+                <option [ngValue]="null">Selecione uma categoria...</option>
+                @for (c of categorias; track c.id) {
+                    <option [ngValue]="c.id">{{ c.nome }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" (click)="salvar()"
+                [disabled]="!titulo.trim() || !autor.trim() || categoriaId === null">Salvar</button>
+            <a routerLink="/livros" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</div>
