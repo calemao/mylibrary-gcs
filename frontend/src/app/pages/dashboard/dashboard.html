@@ -1,0 +1,45 @@
+<div>
+    <h1>Dashboard - MyLibrary</h1>
+
+    <div>
+        <div>
+            <h3>Total de Livros</h3>
+            <p>{{ totalLivros }}</p>
+        </div>
+        <div>
+            <h3>Disponíveis</h3>
+            <p>{{ livrosDisponiveis }}</p>
+        </div>
+        <div>
+            <h3>Emprestados</h3>
+            <p>{{ livrosEmprestados }}</p>
+        </div>
+        <div>
+            <h3>Empréstimos Ativos</h3>
+            <p>{{ emprestimosAtivos }}</p>
+        </div>
+    </div>
+
+    <h2>Empréstimos Atrasados</h2>
+    <div *ngIf="emprestimosAtrasados.length === 0">
+        <p>Nenhum empréstimo atrasado!</p>
+    </div>
+    <table *ngIf="emprestimosAtrasados.length > 0">
+        <tr>
+            <th>Livro</th>
+            <th>Pessoa</th>
+            <th>Previsto para</th>
+        </tr>
+        <tr *ngFor="let e of emprestimosAtrasados">
+            <td>{{ e.livro?.titulo }}</td>
+            <td>{{ e.nomePessoa }}</td>
+            <td>{{ e.dataDevolucaoPrevista }}</td>
+        </tr>
+    </table>
+
+    <div>
+        <a routerLink="/livros/novo">Cadastrar Livro</a>
+        <a routerLink="/categorias/nova">Nova Categoria</a>
+        <a routerLink="/emprestimos/novo">Emprestar Livro</a>
+    </div>
+</div>

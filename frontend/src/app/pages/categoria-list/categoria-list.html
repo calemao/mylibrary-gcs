@@ -1,0 +1,25 @@
+<div>
+    <h1>Categorias</h1>
+    <a routerLink="/categorias/nova">+ Nova Categoria</a>
+
+    <p *ngIf="mensagem">{{ mensagem }}</p>
+
+    <p *ngIf="categorias.length === 0">Nenhuma categoria cadastrada.</p>
+
+    <table *ngIf="categorias.length > 0">
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+        <tr *ngFor="let c of categorias">
+            <td>{{ c.nome }}</td>
+            <td>{{ c.descricao }}</td>
+            <td>
+                <button (click)="deletar(c.id!)">Excluir</button>
+            </td>
+        </tr>
+    </table>
+
+    <a routerLink="/dashboard">Voltar</a>
+</div>

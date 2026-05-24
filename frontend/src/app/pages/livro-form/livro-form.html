@@ -1,0 +1,32 @@
+<div>
+    <h1>Novo Livro</h1>
+
+    <p *ngIf="erro" style="color: red">{{ erro }}</p>
+
+    <div>
+        <label>Título *</label>
+        <input [(ngModel)]="titulo" placeholder="Título do livro" />
+    </div>
+    <div>
+        <label>Autor *</label>
+        <input [(ngModel)]="autor" placeholder="Autor" />
+    </div>
+    <div>
+        <label>ISBN</label>
+        <input [(ngModel)]="isbn" placeholder="ISBN" />
+    </div>
+    <div>
+        <label>Ano</label>
+        <input [(ngModel)]="ano" type="number" placeholder="Ano" />
+    </div>
+    <div>
+        <label>Categoria *</label>
+        <select [(ngModel)]="categoriaId">
+            <option [value]="undefined">Selecione...</option>
+            <option *ngFor="let c of categorias" [value]="c.id">{{ c.nome }}</option>
+        </select>
+    </div>
+
+    <button (click)="salvar()" [disabled]="!titulo.trim() || !autor.trim() || !categoriaId">Salvar</button>
+    <a routerLink="/livros">Cancelar</a>
+</div>

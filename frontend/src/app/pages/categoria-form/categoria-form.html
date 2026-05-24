@@ -1,0 +1,18 @@
+<div>
+    <h1>Nova Categoria</h1>
+
+    <p *ngIf="erro" style="color: red">{{ erro }}</p>
+
+    <div>
+        <label>Nome *</label>
+        <input [(ngModel)]="nome" placeholder="Nome da categoria" />
+    </div>
+
+    <div>
+        <label>Descrição</label>
+        <input [(ngModel)]="descricao" placeholder="Descrição" />
+    </div>
+
+    <button (click)="salvar()" [disabled]="!nome.trim()">Salvar</button>
+    <a routerLink="/categorias">Cancelar</a>
+</div>

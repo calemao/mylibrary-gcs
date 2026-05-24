@@ -1,0 +1,33 @@
+<div>
+    <h1>Emprestar Livro</h1>
+
+    <p *ngIf="erro" style="color: red">{{ erro }}</p>
+
+    <div>
+        <label>Livro *</label>
+        <select [(ngModel)]="livroId">
+            <option [value]="undefined">Selecione um livro...</option>
+            <option *ngFor="let l of livros" [value]="l.id">{{ l.titulo }} - {{ l.autor }}</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Nome da Pessoa *</label>
+        <input [(ngModel)]="nomePessoa" placeholder="Nome completo" />
+    </div>
+
+    <div>
+        <label>Telefone</label>
+        <input [(ngModel)]="telefone" placeholder="Telefone" />
+    </div>
+
+    <div>
+        <label>Data de Devolução Prevista *</label>
+        <input [(ngModel)]="dataDevolucaoPrevista" type="date" />
+    </div>
+
+    <button (click)="salvar()" [disabled]="!livroId || !nomePessoa.trim() || !dataDevolucaoPrevista">
+        Registrar Empréstimo
+    </button>
+    <a routerLink="/livros">Cancelar</a>
+</div>
