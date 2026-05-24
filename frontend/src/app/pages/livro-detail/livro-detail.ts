@@ -11,41 +11,56 @@ import { Livro, Emprestimo } from '../../models/library.model';
   styleUrl: './livro-detail.css'
 })
 export class LivroDetail implements OnInit {
-
   livro?: Livro;
-  emprestimos: Emprestimo[] = [];
+  emprestimoAtivo?: Emprestimo;
   mensagem = '';
+  erro = '';
+  carregando = true;
 
   constructor(
-    private service: LibraryService,
     private route: ActivatedRoute,
+    private service: LibraryService,
     private router: Router
   ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.service.buscarLivroPorId(id).subscribe(l => this.livro = l);
+
+    this.service.buscarLivroPorId(id).subscribe({
+      next: (l) => { this.livro = l; this.carregando = false; },
+      error: () => { this.erro = 'Livro não encontrado.'; this.carregando = false; }
+    });
+
+    this.service.listarAtivos().subscribe({
+      next: (ativos) => {
+        this.emprestimoAtivo = ativos.find(e => e.livro?.id === id);
+      },
+      error: () => {}
+    });
   }
 
-  devolver(emprestimoId: number) {
-    if (confirm('Confirmar devolução?')) {
-      this.service.devolver(emprestimoId).subscribe({
-        next: () => {
-          this.mensagem = 'Livro devolvido com sucesso!';
-          const id = Number(this.route.snapshot.paramMap.get('id'));
-          this.service.buscarLivroPorId(id).subscribe(l => this.livro = l);
-        },
-        error: () => this.mensagem = 'Erro ao devolver livro.'
-      });
-    }
+  devolver() {
+    if (!this.emprestimoAtivo?.id) return;
+    if (!confirm('Confirmar devolução deste livro?')) return;
+
+    this.service.devolver(this.emprestimoAtivo.id).subscribe({
+      next: () => {
+        this.mensagem = '✅ Devolução registrada com sucesso!';
+        if (this.livro) this.livro.status = 'DISPONIVEL';
+        this.emprestimoAtivo = undefined;
+        this.erro = '';
+      },
+      error: () => this.erro = 'Erro ao registrar devolução.'
+    });
   }
 
   deletar() {
-    if (confirm('Deseja excluir este livro?')) {
-      this.service.deletarLivro(this.livro!.id!).subscribe({
-        next: () => this.router.navigate(['/livros']),
-        error: () => this.mensagem = 'Não é possível excluir livro emprestado.'
-      });
-    }
+    if (!this.livro?.id) return;
+    if (!confirm('Deseja excluir este livro?')) return;
+
+    this.service.deletarLivro(this.livro.id).subscribe({
+      next: () => this.router.navigate(['/livros']),
+      error: () => this.erro = 'Não é possível excluir livro emprestado.'
+    });
   }
 }
