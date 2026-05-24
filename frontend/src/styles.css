@@ -16,12 +16,43 @@
   --danger-bg:     #fde8e8;
   --warning:       #92400e;
   --warning-bg:    #fef3c7;
+  --table-stripe:  #f5f7ff;
+  --table-hover:   #eaedff;
+  --input-bg:      #ffffff;
+  --placeholder:   #b0bcd0;
   --radius:        10px;
   --radius-sm:     6px;
   --shadow:        0 1px 3px rgba(26,35,126,.08), 0 1px 2px rgba(26,35,126,.05);
   --shadow-md:     0 4px 12px rgba(26,35,126,.10), 0 2px 4px rgba(26,35,126,.06);
   --shadow-lg:     0 10px 24px rgba(26,35,126,.13), 0 4px 8px rgba(26,35,126,.07);
   --font:          'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body.dark {
+  --primary:       #7986cb;
+  --primary-light: #9fa8da;
+  --primary-dark:  #5c6bc0;
+  --gold:          #fcc419;
+  --gold-dark:     #f59f00;
+  --white:         #ffffff;
+  --bg:            #0f1117;
+  --surface:       #1a1d27;
+  --text:          #e8eaf6;
+  --text-muted:    #9099b5;
+  --border:        #2d3257;
+  --success:       #4ade80;
+  --success-bg:    #052e16;
+  --danger:        #f87171;
+  --danger-bg:     #2d0f0f;
+  --warning:       #fbbf24;
+  --warning-bg:    #1c1200;
+  --table-stripe:  #1e2235;
+  --table-hover:   #252a42;
+  --input-bg:      #1e2235;
+  --placeholder:   #4a5278;
+  --shadow:        0 1px 3px rgba(0,0,0,.40), 0 1px 2px rgba(0,0,0,.30);
+  --shadow-md:     0 4px 12px rgba(0,0,0,.50), 0 2px 4px rgba(0,0,0,.40);
+  --shadow-lg:     0 10px 24px rgba(0,0,0,.60), 0 4px 8px rgba(0,0,0,.50);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,6 +65,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   font-size: 16px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ─── Layout ─────────────────────────────────────── */
@@ -179,8 +211,8 @@ body {
   vertical-align: middle;
 }
 .data-table tbody tr:last-child td { border-bottom: none; }
-.data-table tbody tr:nth-child(even) { background: #f5f7ff; }
-.data-table tbody tr:hover { background: #eaedff; transition: background .15s; }
+.data-table tbody tr:nth-child(even) { background: var(--table-stripe); }
+.data-table tbody tr:hover { background: var(--table-hover); transition: background .15s; }
 .data-table .cell-actions { display: flex; gap: 8px; align-items: center; }
 
 /* ─── Status badges ───────────────────────────────── */
@@ -193,8 +225,8 @@ body {
   letter-spacing: .04em;
   text-transform: uppercase;
 }
-.status-disponivel { background: #dcfce7; color: #166534; }
-.status-emprestado { background: #fee2e2; color: #9b1c1c; }
+.status-disponivel { background: var(--success-bg); color: var(--success); }
+.status-emprestado { background: var(--danger-bg);  color: var(--danger);  }
 
 /* ─── Forms ───────────────────────────────────────── */
 .form-card {
@@ -224,7 +256,7 @@ body {
   font-size: .95rem;
   font-family: var(--font);
   color: var(--text);
-  background: #fff;
+  background: var(--input-bg);
   transition: border-color .2s, box-shadow .2s;
   outline: none;
   appearance: none;
@@ -233,7 +265,7 @@ body {
   border-color: var(--primary-light);
   box-shadow: 0 0 0 3px rgba(57,73,171,.14);
 }
-.form-control::placeholder { color: #b0bcd0; }
+.form-control::placeholder { color: var(--placeholder); }
 
 .form-actions {
   display: flex;
