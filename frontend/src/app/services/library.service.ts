@@ -8,7 +8,7 @@ import { Categoria, Livro, Emprestimo, EmprestimoDTO } from '../models/library.m
 })
 export class LibraryService {
 
-    private api = '/api';
+    private api = 'http://localhost:8080/api';  
 
     constructor(private http: HttpClient) { }
 

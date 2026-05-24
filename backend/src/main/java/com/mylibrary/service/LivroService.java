@@ -59,6 +59,7 @@ public class LivroService {
                     HttpStatus.BAD_REQUEST, "Não é possível excluir um livro que está emprestado."
             );
         }
+        livroRepository.deleteById(id);
     }
 
 }

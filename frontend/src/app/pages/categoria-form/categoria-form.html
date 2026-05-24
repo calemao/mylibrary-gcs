@@ -1,20 +1,24 @@
 <div>
-    <h1>Nova Categoria</h1>
+    <h1 class="page-title">Nova Categoria</h1>
 
     @if (erro) {
-        <p style="color: red">{{ erro }}</p>
+        <div class="alert alert-error">{{ erro }}</div>
     }
 
-    <div>
-        <label>Nome *</label>
-        <input [(ngModel)]="nome" placeholder="Nome da categoria" />
-    </div>
+    <div class="form-card">
+        <div class="form-group">
+            <label>Nome *</label>
+            <input class="form-control" [(ngModel)]="nome" placeholder="Nome da categoria" />
+        </div>
 
-    <div>
-        <label>Descrição</label>
-        <input [(ngModel)]="descricao" placeholder="Descrição" />
-    </div>
+        <div class="form-group">
+            <label>Descrição</label>
+            <input class="form-control" [(ngModel)]="descricao" placeholder="Descrição (opcional)" />
+        </div>
 
-    <button (click)="salvar()" [disabled]="!nome.trim()">Salvar</button>
-    <a routerLink="/categorias">Cancelar</a>
+        <div class="form-actions">
+            <button class="btn btn-primary" (click)="salvar()" [disabled]="!nome.trim()">Salvar</button>
+            <a routerLink="/categorias" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
 </div>

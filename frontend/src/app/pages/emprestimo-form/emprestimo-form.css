@@ -1,0 +1,7 @@
+:host { display: block; }
+
+.available-hint {
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}

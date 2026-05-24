@@ -1,55 +1,59 @@
 <div>
-    <h1>Dashboard - MyLibrary</h1>
+    <h1 class="page-title">Dashboard</h1>
 
     @if (erroConexao) {
-        <div style="color: red; border: 1px solid red; padding: 8px; margin-bottom: 16px;">
+        <div class="alert alert-error">
             <strong>Erro:</strong> {{ erroConexao }}
-            <button (click)="carregarDados()" style="margin-left: 8px;">Tentar novamente</button>
+            <button class="btn btn-sm btn-secondary" (click)="carregarDados()">Tentar novamente</button>
         </div>
     }
 
-    <div>
-        <div>
-            <h3>Total de Livros</h3>
-            <p>{{ totalLivros }}</p>
+    <div class="stats-grid">
+        <div class="stat-card stat-card--blue">
+            <h3 class="stat-title">Total de Livros</h3>
+            <p class="stat-value">{{ totalLivros }}</p>
         </div>
-        <div>
-            <h3>Disponíveis</h3>
-            <p>{{ livrosDisponiveis }}</p>
+        <div class="stat-card stat-card--green">
+            <h3 class="stat-title">Disponíveis</h3>
+            <p class="stat-value">{{ livrosDisponiveis }}</p>
         </div>
-        <div>
-            <h3>Emprestados</h3>
-            <p>{{ livrosEmprestados }}</p>
+        <div class="stat-card stat-card--orange">
+            <h3 class="stat-title">Emprestados</h3>
+            <p class="stat-value">{{ livrosEmprestados }}</p>
         </div>
-        <div>
-            <h3>Empréstimos Ativos</h3>
-            <p>{{ emprestimosAtivos }}</p>
+        <div class="stat-card stat-card--gold">
+            <h3 class="stat-title">Empréstimos Ativos</h3>
+            <p class="stat-value">{{ emprestimosAtivos }}</p>
         </div>
     </div>
 
-    <h2>Empréstimos Atrasados</h2>
+    <h2 class="section-title">Empréstimos Atrasados</h2>
     @if (emprestimosAtrasados.length === 0) {
-        <p>Nenhum empréstimo atrasado!</p>
+        <p class="empty-state">Nenhum empréstimo atrasado!</p>
     } @else {
-        <table>
-            <tr>
-                <th>Livro</th>
-                <th>Pessoa</th>
-                <th>Previsto para</th>
-            </tr>
-            @for (e of emprestimosAtrasados; track e.id) {
+        <table class="data-table">
+            <thead>
                 <tr>
-                    <td>{{ e.livro?.titulo }}</td>
-                    <td>{{ e.nomePessoa }}</td>
-                    <td>{{ e.dataDevolucaoPrevista }}</td>
+                    <th>Livro</th>
+                    <th>Pessoa</th>
+                    <th>Previsto para</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @for (e of emprestimosAtrasados; track e.id) {
+                    <tr>
+                        <td>{{ e.livro?.titulo }}</td>
+                        <td>{{ e.nomePessoa }}</td>
+                        <td class="text-danger">{{ e.dataDevolucaoPrevista }}</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     }
 
-    <div>
-        <a routerLink="/livros/novo">Cadastrar Livro</a>
-        <a routerLink="/categorias/nova">Nova Categoria</a>
-        <a routerLink="/emprestimos/novo">Emprestar Livro</a>
+    <div class="quick-actions">
+        <a routerLink="/livros/novo" class="btn btn-primary">+ Cadastrar Livro</a>
+        <a routerLink="/categorias/nova" class="btn btn-secondary">+ Nova Categoria</a>
+        <a routerLink="/emprestimos/novo" class="btn btn-gold">Emprestar Livro</a>
     </div>
 </div>

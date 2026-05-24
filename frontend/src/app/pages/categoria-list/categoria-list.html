@@ -1,31 +1,37 @@
 <div>
-    <h1>Categorias</h1>
-    <a routerLink="/categorias/nova">+ Nova Categoria</a>
+    <div class="page-header">
+        <h1 class="page-title">Categorias</h1>
+        <a routerLink="/categorias/nova" class="btn btn-primary">+ Nova Categoria</a>
+    </div>
 
     @if (mensagem) {
-        <p>{{ mensagem }}</p>
+        <p class="message-success">{{ mensagem }}</p>
     }
 
     @if (categorias.length === 0) {
-        <p>Nenhuma categoria cadastrada.</p>
+        <p class="empty-state">Nenhuma categoria cadastrada.</p>
     } @else {
-        <table>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-            </tr>
-            @for (c of categorias; track c.id) {
+        <table class="data-table">
+            <thead>
                 <tr>
-                    <td>{{ c.nome }}</td>
-                    <td>{{ c.descricao }}</td>
-                    <td>
-                        <button (click)="deletar(c.id!)">Excluir</button>
-                    </td>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @for (c of categorias; track c.id) {
+                    <tr>
+                        <td>{{ c.nome }}</td>
+                        <td>{{ c.descricao }}</td>
+                        <td class="cell-actions">
+                            <button class="btn btn-danger btn-sm" (click)="deletar(c.id!)">Excluir</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     }
 
-    <a routerLink="/dashboard">Voltar</a>
+    <a routerLink="/dashboard" class="back-link">Voltar ao Dashboard</a>
 </div>

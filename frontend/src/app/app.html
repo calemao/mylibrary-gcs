@@ -1,6 +1,16 @@
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/categorias">Categorias</a>
-  <a routerLink="/livros">Livros</a>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-brand">
+      <span class="navbar-logo">📚</span>
+      My<strong>Library</strong>
+    </div>
+    <div class="navbar-links">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/categorias" routerLinkActive="active">Categorias</a>
+      <a routerLink="/livros" routerLinkActive="active">Livros</a>
+    </div>
+  </div>
 </nav>
-<router-outlet />
+<div class="page-container">
+  <router-outlet />
+</div>
