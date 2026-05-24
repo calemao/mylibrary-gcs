@@ -1,7 +1,9 @@
 <div>
     <h1>Novo Livro</h1>
 
-    <p *ngIf="erro" style="color: red">{{ erro }}</p>
+    @if (erro) {
+        <p style="color: red">{{ erro }}</p>
+    }
 
     <div>
         <label>Título *</label>
@@ -22,11 +24,13 @@
     <div>
         <label>Categoria *</label>
         <select [(ngModel)]="categoriaId">
-            <option [value]="undefined">Selecione...</option>
-            <option *ngFor="let c of categorias" [value]="c.id">{{ c.nome }}</option>
+            <option [ngValue]="null">Selecione...</option>
+            @for (c of categorias; track c.id) {
+                <option [ngValue]="c.id">{{ c.nome }}</option>
+            }
         </select>
     </div>
 
-    <button (click)="salvar()" [disabled]="!titulo.trim() || !autor.trim() || !categoriaId">Salvar</button>
+    <button (click)="salvar()" [disabled]="!titulo.trim() || !autor.trim() || categoriaId === null">Salvar</button>
     <a routerLink="/livros">Cancelar</a>
 </div>

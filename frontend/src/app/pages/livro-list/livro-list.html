@@ -2,13 +2,17 @@
     <h1>Livros</h1>
     <a routerLink="/livros/novo">+ Novo Livro</a>
 
-    <p *ngIf="mensagem">{{ mensagem }}</p>
+    @if (mensagem) {
+        <p>{{ mensagem }}</p>
+    }
 
     <div>
         <input [(ngModel)]="busca" placeholder="Buscar por título ou autor" (input)="carregar()" />
         <select [(ngModel)]="categoriaId" (change)="carregar()">
-            <option [value]="undefined">Todas as categorias</option>
-            <option *ngFor="let c of categorias" [value]="c.id">{{ c.nome }}</option>
+            <option [ngValue]="null">Todas as categorias</option>
+            @for (c of categorias; track c.id) {
+                <option [ngValue]="c.id">{{ c.nome }}</option>
+            }
         </select>
         <select [(ngModel)]="status" (change)="carregar()">
             <option value="">Todos</option>
@@ -17,25 +21,29 @@
         </select>
     </div>
 
-    <p *ngIf="livros.length === 0">Nenhum livro encontrado.</p>
-
-    <table *ngIf="livros.length > 0">
-        <tr>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Status</th>
-            <th>Ações</th>
-        </tr>
-        <tr *ngFor="let l of livros">
-            <td>{{ l.titulo }}</td>
-            <td>{{ l.autor }}</td>
-            <td>{{ l.status }}</td>
-            <td>
-                <a [routerLink]="['/livros', l.id]">Ver</a>
-                <button (click)="deletar(l.id!)">Excluir</button>
-            </td>
-        </tr>
-    </table>
+    @if (livros.length === 0) {
+        <p>Nenhum livro encontrado.</p>
+    } @else {
+        <table>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            @for (l of livros; track l.id) {
+                <tr>
+                    <td>{{ l.titulo }}</td>
+                    <td>{{ l.autor }}</td>
+                    <td>{{ l.status }}</td>
+                    <td>
+                        <a [routerLink]="['/livros', l.id]">Ver</a>
+                        <button (click)="deletar(l.id!)">Excluir</button>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
 
     <a routerLink="/dashboard">Voltar</a>
 </div>

@@ -1,6 +1,13 @@
 <div>
     <h1>Dashboard - MyLibrary</h1>
 
+    @if (erroConexao) {
+        <div style="color: red; border: 1px solid red; padding: 8px; margin-bottom: 16px;">
+            <strong>Erro:</strong> {{ erroConexao }}
+            <button (click)="carregarDados()" style="margin-left: 8px;">Tentar novamente</button>
+        </div>
+    }
+
     <div>
         <div>
             <h3>Total de Livros</h3>
@@ -21,21 +28,24 @@
     </div>
 
     <h2>Empréstimos Atrasados</h2>
-    <div *ngIf="emprestimosAtrasados.length === 0">
+    @if (emprestimosAtrasados.length === 0) {
         <p>Nenhum empréstimo atrasado!</p>
-    </div>
-    <table *ngIf="emprestimosAtrasados.length > 0">
-        <tr>
-            <th>Livro</th>
-            <th>Pessoa</th>
-            <th>Previsto para</th>
-        </tr>
-        <tr *ngFor="let e of emprestimosAtrasados">
-            <td>{{ e.livro?.titulo }}</td>
-            <td>{{ e.nomePessoa }}</td>
-            <td>{{ e.dataDevolucaoPrevista }}</td>
-        </tr>
-    </table>
+    } @else {
+        <table>
+            <tr>
+                <th>Livro</th>
+                <th>Pessoa</th>
+                <th>Previsto para</th>
+            </tr>
+            @for (e of emprestimosAtrasados; track e.id) {
+                <tr>
+                    <td>{{ e.livro?.titulo }}</td>
+                    <td>{{ e.nomePessoa }}</td>
+                    <td>{{ e.dataDevolucaoPrevista }}</td>
+                </tr>
+            }
+        </table>
+    }
 
     <div>
         <a routerLink="/livros/novo">Cadastrar Livro</a>

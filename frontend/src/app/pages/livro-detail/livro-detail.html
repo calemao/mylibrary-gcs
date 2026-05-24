@@ -1,15 +1,19 @@
-<div *ngIf="livro">
-    <h1>{{ livro.titulo }}</h1>
-    <p><strong>Autor:</strong> {{ livro.autor }}</p>
-    <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
-    <p><strong>Ano:</strong> {{ livro.ano }}</p>
-    <p><strong>Status:</strong> {{ livro.status }}</p>
-
-    <p *ngIf="mensagem">{{ mensagem }}</p>
-
+@if (livro) {
     <div>
-        <a routerLink="/emprestimos/novo">Emprestar</a>
-        <button (click)="deletar()">Excluir</button>
-        <a routerLink="/livros">Voltar</a>
+        <h1>{{ livro.titulo }}</h1>
+        <p><strong>Autor:</strong> {{ livro.autor }}</p>
+        <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
+        <p><strong>Ano:</strong> {{ livro.ano }}</p>
+        <p><strong>Status:</strong> {{ livro.status }}</p>
+
+        @if (mensagem) {
+            <p>{{ mensagem }}</p>
+        }
+
+        <div>
+            <a routerLink="/emprestimos/novo">Emprestar</a>
+            <button (click)="deletar()">Excluir</button>
+            <a routerLink="/livros">Voltar</a>
+        </div>
     </div>
-</div>
+}

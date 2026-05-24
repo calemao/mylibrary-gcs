@@ -17,7 +17,7 @@ export class LivroForm implements OnInit {
   autor = '';
   isbn = '';
   ano?: number;
-  categoriaId?: number;
+  categoriaId: number | null = null;
   categorias: Categoria[] = [];
   erro = '';
 
@@ -28,7 +28,7 @@ export class LivroForm implements OnInit {
   }
 
   salvar() {
-    if (!this.titulo.trim() || !this.autor.trim() || !this.categoriaId) {
+    if (!this.titulo.trim() || !this.autor.trim() || this.categoriaId === null) {
       this.erro = 'Título, autor e categoria são obrigatórios.';
       return;
     }

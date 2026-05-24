@@ -1,7 +1,9 @@
 <div>
     <h1>Nova Categoria</h1>
 
-    <p *ngIf="erro" style="color: red">{{ erro }}</p>
+    @if (erro) {
+        <p style="color: red">{{ erro }}</p>
+    }
 
     <div>
         <label>Nome *</label>

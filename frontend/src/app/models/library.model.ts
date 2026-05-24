@@ -20,9 +20,10 @@ export interface Emprestimo {
     id?: number;
     livro?: Livro;
     nomePessoa: string;
+    telefone?: string;
     dataEmprestimo?: string;
-    dataDevolucao?: string;
     dataDevolucaoPrevista?: string;
+    dataDevolucaoEfetiva?: string;
 }
 
 export interface EmprestimoDTO {

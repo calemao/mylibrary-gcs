@@ -1,14 +1,25 @@
 <div>
     <h1>Emprestar Livro</h1>
 
-    <p *ngIf="erro" style="color: red">{{ erro }}</p>
+    @if (erro) {
+        <p style="color: red">{{ erro }}</p>
+    }
 
     <div>
         <label>Livro *</label>
-        <select [(ngModel)]="livroId">
-            <option [value]="undefined">Selecione um livro...</option>
-            <option *ngFor="let l of livros" [value]="l.id">{{ l.titulo }} - {{ l.autor }}</option>
-        </select>
+        @if (carregandoLivros) {
+            <p>Carregando livros disponíveis...</p>
+        } @else {
+            <select [(ngModel)]="livroId">
+                <option [ngValue]="null">Selecione um livro...</option>
+                @for (l of livros; track l.id) {
+                    <option [ngValue]="l.id">{{ l.titulo }} - {{ l.autor }}</option>
+                }
+            </select>
+            @if (livros.length === 0) {
+                <p style="color: orange">Nenhum livro disponível no momento.</p>
+            }
+        }
     </div>
 
     <div>
@@ -26,7 +37,7 @@
         <input [(ngModel)]="dataDevolucaoPrevista" type="date" />
     </div>
 
-    <button (click)="salvar()" [disabled]="!livroId || !nomePessoa.trim() || !dataDevolucaoPrevista">
+    <button (click)="salvar()" [disabled]="livroId === null || !nomePessoa.trim() || !dataDevolucaoPrevista">
         Registrar Empréstimo
     </button>
     <a routerLink="/livros">Cancelar</a>

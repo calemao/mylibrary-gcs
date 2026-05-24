@@ -17,7 +17,7 @@ export class LivroList implements OnInit {
   categorias: Categoria[] = [];
   mensagem = '';
   busca = '';
-  categoriaId?: number;
+  categoriaId: number | null = null;
   status = '';
 
   constructor(private service: LibraryService) {}
@@ -28,7 +28,7 @@ export class LivroList implements OnInit {
   }
 
   carregar() {
-    this.service.listarLivros(this.categoriaId, this.status || undefined, this.busca || undefined)
+    this.service.listarLivros(this.categoriaId ?? undefined, this.status || undefined, this.busca || undefined)
       .subscribe(data => this.livros = data);
   }
 

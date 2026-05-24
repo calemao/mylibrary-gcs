@@ -14,20 +14,33 @@ import { Livro } from '../../models/library.model';
 export class EmprestimoForm implements OnInit {
 
   livros: Livro[] = [];
-  livroId?: number;
+  livroId: number | null = null;
   nomePessoa = '';
   telefone = '';
   dataDevolucaoPrevista = '';
   erro = '';
+  carregandoLivros = false;
 
   constructor(private service: LibraryService, private router: Router) {}
 
   ngOnInit() {
-    this.service.listarLivros(undefined, 'DISPONIVEL').subscribe(l => this.livros = l);
+    this.carregandoLivros = true;
+    this.service.listarLivros(undefined, 'DISPONIVEL').subscribe({
+      next: (l) => {
+        console.log('[EmprestimoForm] listarLivros resposta:', l);
+        this.livros = l;
+        this.carregandoLivros = false;
+      },
+      error: (err) => {
+        console.error('[EmprestimoForm] Erro ao carregar livros:', err);
+        this.erro = 'Erro ao carregar lista de livros. Verifique se o servidor está disponível.';
+        this.carregandoLivros = false;
+      }
+    });
   }
 
   salvar() {
-    if (!this.livroId || !this.nomePessoa.trim() || !this.dataDevolucaoPrevista) {
+    if (this.livroId === null || !this.nomePessoa.trim() || !this.dataDevolucaoPrevista) {
       this.erro = 'Livro, nome e data de devolução são obrigatórios.';
       return;
     }
